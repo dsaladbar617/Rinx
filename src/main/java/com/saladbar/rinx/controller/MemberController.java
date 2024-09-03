@@ -1,4 +1,4 @@
-package com.saladbar.rinx;
+package com.saladbar.rinx.controller;
 
 import com.saladbar.rinx.entity.Member;
 import com.saladbar.rinx.service.MemberService;

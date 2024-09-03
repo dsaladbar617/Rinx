@@ -13,6 +13,9 @@ public class Member {
     @Column(name = "id")
     private int id;
 
+//    @OneToOne(mappedBy = "skater")
+//    private Skater skater;
+
     @Column(name = "first_name")
     private String firstName;
 
