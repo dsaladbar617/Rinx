@@ -1,14 +1,17 @@
 package com.saladbar.rinx.service;
 
 import com.saladbar.rinx.dao.SkaterRepository;
+import com.saladbar.rinx.entity.Player;
 import com.saladbar.rinx.entity.Skater;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class SkaterServiceImpl implements SkaterService {
+@Qualifier("Skater")
+public class SkaterServiceImpl implements PlayerService {
 
     private final SkaterRepository skaterRepository;
 
@@ -18,23 +21,23 @@ public class SkaterServiceImpl implements SkaterService {
     }
 
     @Override
-    public List<Skater> findAll() {
+    public List<Player> findAll() {
         return skaterRepository.findAll();
     }
 
     @Override
-    public Skater findById(int id) {
+    public Player findById(int id) {
         return skaterRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Skater save(int skaterId) {
-//        Skater skater = skaterRepository.save(skaterId);
-        return null;
+    public Player save(Player skater) {
+//        Skater test = (Skater)skater;
+        return skaterRepository.save(skater);
     }
 
     @Override
-    public void delete(Skater skater) {
+    public void delete(Player skater) {
         skaterRepository.delete(skater);
     }
 }

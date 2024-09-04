@@ -7,6 +7,6 @@ import java.util.List;
 public interface SkaterService {
     List<Skater> findAll();
     Skater findById(int id);
-    Skater save(int skaterId);
+    Skater save(Skater skater);
     void delete(Skater skater);
 }

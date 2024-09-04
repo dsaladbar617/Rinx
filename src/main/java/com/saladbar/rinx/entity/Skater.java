@@ -5,15 +5,11 @@ import jakarta.persistence.*;
 
 @Entity(name = "skater")
 @Table(name = "skaters")
-public class Skater {
+public class Skater extends Player {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "member_id", referencedColumnName = "id")
-//    private Member member;
 
     @Column(name = "goals")
     private int goals;
@@ -24,14 +20,18 @@ public class Skater {
     @Column(name = "pim")
     private int pim;
 
-//    public Skater() {}
-//
-//    public Skater(int memberId, int goals, int assists, int pim) {
-//        this.member = memberId;
-//        this.goals = goals;
-//        this.assists = assists;
-//        this.pim = pim;
-//    }
+    @Column(name = "member_id")
+    private int memberId;
+
+    public Skater() {}
+
+    public Skater(int memberId, int goals, int assists, int pim) {
+        this.memberId = memberId;
+        this.goals = goals;
+        this.assists = assists;
+        this.pim = pim;
+
+    }
 
     public int getId() {
         return id;
@@ -41,13 +41,13 @@ public class Skater {
         this.id = id;
     }
 
-//    public int getMemberId() {
-//        return memberId;
-//    }
-//
-//    public void setMemberId(int memberId) {
-//        this.memberId = memberId;
-//    }
+    public int getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(int memberId) {
+        this.memberId = memberId;
+    }
 
     public int getGoals() {
         return goals;
@@ -73,14 +73,15 @@ public class Skater {
         this.pim = pim;
     }
 
-//    @Override
-//    public String toString() {
-//        return "Skater{" +
-//                "id=" + id +
-//                ", memberId=" + memberId +
-//                ", goals=" + goals +
-//                ", assists=" + assists +
-//                ", pim=" + pim +
-//                '}';
-//    }
+    @Override
+    public String toString() {
+        return "Skater{" +
+                "id=" + id +
+                ", memberId=" + memberId +
+                ", goals=" + goals +
+                ", assists=" + assists +
+                ", pim=" + pim +
+                '}';
+    }
+
 }
