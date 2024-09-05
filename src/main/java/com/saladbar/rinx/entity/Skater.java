@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 
 @Entity(name = "skater")
 @Table(name = "skaters")
-public class Skater extends Player {
+public class Skater {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,12 +20,16 @@ public class Skater extends Player {
     @Column(name = "pim")
     private int pim;
 
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id")
+    private Member member;
+
     @Column(name = "member_id")
     private int memberId;
 
     public Skater() {}
 
-    public Skater(int memberId, int goals, int assists, int pim) {
+    public Skater( int memberId, int goals, int assists, int pim) {
         this.memberId = memberId;
         this.goals = goals;
         this.assists = assists;

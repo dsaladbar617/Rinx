@@ -1,6 +1,6 @@
 package com.saladbar.rinx.service;
 
-import com.saladbar.rinx.dao.MemberRepository;
+import com.saladbar.rinx.repository.MemberRepository;
 import com.saladbar.rinx.entity.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

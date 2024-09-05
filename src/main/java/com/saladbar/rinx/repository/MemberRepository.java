@@ -1,4 +1,4 @@
-package com.saladbar.rinx.dao;
+package com.saladbar.rinx.repository;
 
 import com.saladbar.rinx.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;

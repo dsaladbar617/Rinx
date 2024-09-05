@@ -1,7 +1,7 @@
 package com.saladbar.rinx.service;
 
-import com.saladbar.rinx.dao.GoalieRepository;
-import com.saladbar.rinx.entity.Player;
+import com.saladbar.rinx.entity.Goalie;
+import com.saladbar.rinx.repository.GoalieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 @Qualifier("Goalie")
-public class GoalieServiceImpl implements PlayerService{
+public class GoalieServiceImpl implements GoalieService{
 
     private final GoalieRepository goalieRepository;
 
@@ -20,22 +20,22 @@ public class GoalieServiceImpl implements PlayerService{
     }
 
     @Override
-    public List<Player> findAll() {
+    public List<Goalie> findAll() {
         return goalieRepository.findAll();
     }
 
     @Override
-    public Player findById(int id) {
+    public Goalie findById(int id) {
         return goalieRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Player save(Player player) {
-        return goalieRepository.save(player);
+    public Goalie save(Goalie goalie) {
+        return goalieRepository.save(goalie);
     }
 
     @Override
-    public void delete(Player player) {
-        goalieRepository.delete(player);
+    public void delete(Goalie goalie) {
+        goalieRepository.delete(goalie);
     }
 }
