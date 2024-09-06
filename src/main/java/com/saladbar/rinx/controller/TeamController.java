@@ -1,5 +1,6 @@
 package com.saladbar.rinx.controller;
 
+import com.saladbar.rinx.entity.Roster;
 import com.saladbar.rinx.entity.Team;
 import com.saladbar.rinx.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,8 @@ public class TeamController {
 
     @PostMapping("/teams")
     public Team createTeam(@RequestBody Team team) {
-        System.out.println(team);
+//        Roster roster = new Roster();
+        team.setRoster(new Roster());
         return teamService.save(team);
     }
 }

@@ -23,7 +23,7 @@ create table if not exists members (
 
 create table if not exists goalies (
     id int PRIMARY KEY AUTO_INCREMENT,
-    member_id int,
+    member_id int UNIQUE ,
     foreign key (member_id) references members(id),
     shots_against int DEFAULT 0,
     saves int DEFAULT 0,
@@ -33,7 +33,7 @@ create table if not exists goalies (
 
 create table if not exists skaters (
     id int PRIMARY KEY AUTO_INCREMENT,
-    member_id int,
+    member_id int UNIQUE,
     foreign key (member_id) references members(id),
     goals int DEFAULT 0,
     assists int DEFAULT 0,

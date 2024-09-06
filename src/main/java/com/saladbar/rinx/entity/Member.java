@@ -1,10 +1,12 @@
 package com.saladbar.rinx.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.sql.Date;
 
-@Entity
+@Entity(name = "Member")
+@Data
 @Table(name = "members")
 public class Member {
 
@@ -12,9 +14,6 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-
-//    @OneToOne(mappedBy = "skater")
-//    private Skater skater;
 
     @Column(name = "first_name")
     private String firstName;
@@ -31,63 +30,12 @@ public class Member {
     @Column(name = "date_joined")
     private Date dateJoined;
 
-    public Member() {}
+    @OneToOne( cascade = CascadeType.ALL, orphanRemoval = true )
+    private Skater skater;
 
-    public Member(String firstName, String lastName, String email, String memberPassword, Date dateJoined) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.memberPassword = memberPassword;
-        this.dateJoined = new Date(System.currentTimeMillis());
-    }
+    @OneToOne( cascade = CascadeType.ALL, orphanRemoval = true )
+    private Goalie goalie;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getMemberPassword() {
-        return memberPassword;
-    }
-
-    public void setMemberPassword(String memberPassword) {
-        this.memberPassword = memberPassword;
-    }
-
-    public Date getDateJoined() {
-        return dateJoined;
-    }
-
-    public void setDateJoined(Date dateJoined) {
-        this.dateJoined = dateJoined;
-    }
 
     @Override
     public String toString() {

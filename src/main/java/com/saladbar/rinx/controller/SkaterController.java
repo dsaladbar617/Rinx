@@ -1,6 +1,8 @@
 package com.saladbar.rinx.controller;
 
+import com.saladbar.rinx.entity.Member;
 import com.saladbar.rinx.entity.Skater;
+import com.saladbar.rinx.service.MemberService;
 import com.saladbar.rinx.service.SkaterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,12 +15,14 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class SkaterController {
 
-    @Qualifier("Skater")
+//    @Qualifier("Skater")
     private final SkaterService skaterService;
+    private final MemberService memberService;
 
     @Autowired
-    public SkaterController(SkaterService skaterService) {
+    public SkaterController(SkaterService skaterService, MemberService memberService) {
         this.skaterService = skaterService;
+        this.memberService = memberService;
     }
 
     @GetMapping("/skaters")
@@ -26,10 +30,14 @@ public class SkaterController {
         return skaterService.findAll();
     }
 
-    @PostMapping("/skaters")
-    public ResponseEntity<Skater> addSkater(@RequestBody Skater skater) {
-        Skater savedSkater = skaterService.save(skater);
-        return ResponseEntity.ok(savedSkater);
+    @PostMapping("/skaters/{memberId}")
+    public ResponseEntity<Skater> addSkater(@PathVariable int memberId) {
+
+        Member member = memberService.findById(memberId);
+        Skater skater = skaterService.save(new Skater());
+        member.setSkater(skater);
+        memberService.save(member);
+        return ResponseEntity.ok(skater);
     }
 
     @DeleteMapping("/skaters/{skaterId}")
