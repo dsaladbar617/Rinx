@@ -2,6 +2,8 @@ package com.saladbar.rinx.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 
 @Entity(name = "skater")
 @Table(name = "skaters")
@@ -9,48 +11,59 @@ public class Skater {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long skaterId;
 
     @Column(name = "goals")
-    private int goals;
+    private int goals = 0;
 
     @Column(name = "assists")
-    private int assists;
+    private int assists = 0;
 
     @Column(name = "pim")
-    private int pim;
+    private int pim = 0;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "member_id")
     private Member member;
 
-    @Column(name = "member_id")
-    private int memberId;
+    @ManyToMany(mappedBy = "skaters")
+    private List<Team> teams;
 
     public Skater() {}
 
-    public Skater( int memberId, int goals, int assists, int pim) {
-        this.memberId = memberId;
+    public Skater(Member member) {
+        this.member = member;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+    public List<Team> getTeams() {
+        return teams;
+    }
+
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
+    }
+
+    public Skater( int goals, int assists, int pim, Member member) {
         this.goals = goals;
         this.assists = assists;
         this.pim = pim;
-
+        this.member = member;
     }
 
-    public int getId() {
-        return id;
+    public long getSkaterId() {
+        return skaterId;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getMemberId() {
-        return memberId;
-    }
-
-    public void setMemberId(int memberId) {
-        this.memberId = memberId;
+    public void setSkaterId(long id) {
+        this.skaterId = id;
     }
 
     public int getGoals() {
@@ -80,8 +93,8 @@ public class Skater {
     @Override
     public String toString() {
         return "Skater{" +
-                "id=" + id +
-                ", memberId=" + memberId +
+                "id=" + skaterId +
+                ", member=" + member +
                 ", goals=" + goals +
                 ", assists=" + assists +
                 ", pim=" + pim +

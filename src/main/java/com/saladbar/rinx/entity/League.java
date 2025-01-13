@@ -1,5 +1,6 @@
 package com.saladbar.rinx.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -10,12 +11,12 @@ import java.util.List;
 public class League {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long leagueId;
 
     @Column(name = "league_name")
     private String leagueName;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "league_id")
     private List<Team> teams = new ArrayList<>();
 
@@ -25,12 +26,12 @@ public class League {
         this.leagueName = leagueName;
     }
 
-    public int getId() {
-        return id;
+    public long getLeagueId() {
+        return leagueId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setLeagueId(long id) {
+        this.leagueId = id;
     }
 
     public String getLeagueName() {
@@ -52,7 +53,7 @@ public class League {
     @Override
     public String toString() {
         return "League{" +
-                "id=" + id +
+                "id=" + leagueId +
                 ", leagueName='" + leagueName + '\'' +
                 '}';
     }

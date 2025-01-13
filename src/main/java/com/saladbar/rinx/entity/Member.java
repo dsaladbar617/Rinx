@@ -10,11 +10,7 @@ public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
-
-//    @OneToOne(mappedBy = "skater")
-//    private Skater skater;
+    private long memberId;
 
     @Column(name = "first_name")
     private String firstName;
@@ -41,12 +37,12 @@ public class Member {
         this.dateJoined = new Date(System.currentTimeMillis());
     }
 
-    public int getId() {
-        return id;
+    public long getMemberId() {
+        return memberId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setMemberId(long id) {
+        this.memberId = id;
     }
 
     public String getFirstName() {
@@ -92,7 +88,7 @@ public class Member {
     @Override
     public String toString() {
         return "Member{" +
-                "id=" + id +
+                "id=" + memberId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +

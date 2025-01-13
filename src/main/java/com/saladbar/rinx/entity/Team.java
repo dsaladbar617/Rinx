@@ -1,59 +1,94 @@
 package com.saladbar.rinx.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity(name = "team")
 @Table(name = "teams")
 public class Team {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+    private long teamId;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "team_name")
+    private String teamName;
 
-    @Column(name = "league_id")
-    private int leagueId;
+    @ManyToOne
+    @JoinColumn(name = "league_id")
+    private League league;
+
+    @ManyToMany
+    @JoinTable(
+            name = "teams_skaters",
+            joinColumns = @JoinColumn(name = "team_id"),
+            inverseJoinColumns = @JoinColumn(name = "skater_id")
+    )
+    private List<Skater> skaters;
+
+    @ManyToMany
+    @JoinTable(
+            name = "TeamsGoalies",
+            joinColumns = @JoinColumn(name = "team_id"),
+            inverseJoinColumns = @JoinColumn(name = "goalie_id")
+    )
+    private List<Goalie> goalies;
 
     public Team() {}
 
-    public Team( String name, int leagueId) {
-        this.name = name;
-        this.leagueId = leagueId;
+    public Team( String name, League league) {
+        this.teamName = name;
+        this.league = league;
     }
 
-
-    public int getId() {
-        return id;
+    public List<Goalie> getGoalies() {
+        return goalies;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setGoalies(List<Goalie> goalies) {
+        this.goalies = goalies;
     }
 
-    public String getName() {
-        return name;
+    public List<Skater> getSkaters() {
+        return skaters;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSkaters(List<Skater> skaters) {
+        this.skaters = skaters;
     }
 
-    public int getLeagueId() {
-        return leagueId;
+    public long getTeamId() {
+        return teamId;
     }
 
-    public void setLeagueId(int leagueId) {
-        this.leagueId = leagueId;
+    public void setTeamId(long id) {
+        this.teamId = id;
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String name) {
+        this.teamName = name;
+    }
+
+    public League getLeague() {
+        return league;
+    }
+
+    public void setLeague(League league) {
+        this.league = league;
     }
 
     @Override
     public String toString() {
         return "Team{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", leagueId=" + leagueId +
+                "id=" + teamId +
+                ", teamName='" + teamName + '\'' +
+                ", league=" + league +
                 '}';
     }
 }
