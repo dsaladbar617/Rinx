@@ -1,14 +1,16 @@
 package com.saladbar.rinx.league.service;
 
-import com.saladbar.rinx.models.dto.LeagueView;
-import com.saladbar.rinx.models.dto.TeamDto;
-import com.saladbar.rinx.models.entity.Team;
+import com.saladbar.rinx.exception.ResourceNotFoundException;
+import com.saladbar.rinx.model.dto.LeagueView;
+import com.saladbar.rinx.model.dto.TeamDto;
+import com.saladbar.rinx.model.entity.Team;
 import com.saladbar.rinx.league.repository.LeagueRepository;
-import com.saladbar.rinx.models.entity.League;
+import com.saladbar.rinx.model.entity.League;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -26,12 +28,19 @@ public class LeagueServiceImpl implements LeagueService {
     }
 
     @Override
-    public League findById(long id) {
-        return leagueRepository.findById(id).orElse(null);
+    public Optional<League> findById(long id) {
+        Optional<League> league = leagueRepository.findById(id);
+        if (league.isEmpty()) throw new ResourceNotFoundException("League not found with the id: " + id);
+
+        return league;
     }
 
     @Override
     public League save(League league) {
+        Optional<League> checkLeague = leagueRepository.findByLeagueName(league.getLeagueName());
+
+        if (checkLeague.isPresent()) throw new ResourceNotFoundException("A league already exists with name: " + league.getLeagueName());
+
         return leagueRepository.save(league);
     }
 
@@ -43,7 +52,7 @@ public class LeagueServiceImpl implements LeagueService {
     @Override
     public void addTeamToLeague(long leagueId, TeamDto teamDto) {
         League league = leagueRepository.findById(leagueId).orElse(null);
-        if (league == null) throw new RuntimeException("No League Found");
+        if (league == null) throw new ResourceNotFoundException("No League Found");
         Team team = new Team(teamDto.getTeamName(), league);
         league.getTeams().add(team);
         leagueRepository.save(league);
@@ -55,7 +64,12 @@ public class LeagueServiceImpl implements LeagueService {
     }
 
     @Override
-    public LeagueView findTeamViewById(long id) {
+    public Optional<LeagueView> findTeamViewById(long id) {
         return leagueRepository.findByLeagueId(id);
+    }
+
+    @Override
+    public League updateLeague(League updatedLeague) {
+        return leagueRepository.save(updatedLeague);
     }
 }

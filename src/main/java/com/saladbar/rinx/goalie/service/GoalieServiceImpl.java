@@ -1,7 +1,7 @@
 package com.saladbar.rinx.goalie.service;
 
-import com.saladbar.rinx.models.entity.Goalie;
-import com.saladbar.rinx.models.entity.Member;
+import com.saladbar.rinx.model.entity.Goalie;
+import com.saladbar.rinx.model.entity.Member;
 import com.saladbar.rinx.member.service.MemberService;
 import com.saladbar.rinx.goalie.repository.GoalieRepository;
 import org.springframework.beans.factory.annotation.Autowired;

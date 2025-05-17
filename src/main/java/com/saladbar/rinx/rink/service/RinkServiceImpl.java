@@ -1,6 +1,7 @@
 package com.saladbar.rinx.rink.service;
 
-import com.saladbar.rinx.models.entity.Rink;
+import com.saladbar.rinx.exception.ResourceNotFoundException;
+import com.saladbar.rinx.model.entity.Rink;
 import com.saladbar.rinx.rink.repository.RinkRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class RinkServiceImpl implements RinkService{
     public Rink findById(long id) {
         Optional<Rink> rink = rinkRepository.findById(id);
 
-        if (rink.isEmpty()) throw new RuntimeException("No Rink Found");
+        if (rink.isEmpty()) throw new ResourceNotFoundException("No Rink Found");
 
         return rink.get();
     }
@@ -35,6 +36,15 @@ public class RinkServiceImpl implements RinkService{
 
     @Override
     public Rink save(Rink rink) {
+        Optional<Rink> savedRink = rinkRepository.findById(rink.getRinkId());
+        if (savedRink.isPresent()) throw new ResourceNotFoundException("Rink already saved");
+
         return rinkRepository.save(rink);
+    }
+
+    @Override
+    public void delete(Rink rink) {
+        Optional<Rink> found = rinkRepository.findById(rink.getRinkId());
+        found.ifPresent(rinkRepository::delete);
     }
 }

@@ -1,4 +1,4 @@
-package com.saladbar.rinx.models.entity;
+package com.saladbar.rinx.model.entity;
 
 import jakarta.persistence.*;
 

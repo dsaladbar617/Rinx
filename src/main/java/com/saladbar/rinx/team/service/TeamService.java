@@ -1,7 +1,7 @@
 package com.saladbar.rinx.team.service;
 
-import com.saladbar.rinx.models.dto.TeamView;
-import com.saladbar.rinx.models.entity.Team;
+import com.saladbar.rinx.model.dto.TeamView;
+import com.saladbar.rinx.model.entity.Team;
 
 import java.util.List;
 import java.util.Set;

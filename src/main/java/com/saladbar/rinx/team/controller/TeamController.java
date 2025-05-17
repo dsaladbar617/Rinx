@@ -1,10 +1,12 @@
 package com.saladbar.rinx.team.controller;
 
-import com.saladbar.rinx.models.dto.TeamDto;
-import com.saladbar.rinx.models.dto.TeamView;
-import com.saladbar.rinx.models.entity.Team;
+import com.saladbar.rinx.model.dto.TeamDto;
+import com.saladbar.rinx.model.dto.TeamView;
+import com.saladbar.rinx.model.entity.Team;
 import com.saladbar.rinx.league.service.LeagueService;
 import com.saladbar.rinx.team.service.TeamService;
+import com.saladbar.rinx.util.UriBuilder;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/api/v1")
+@Tag(name = "Team", description = "Handles team operations.")
 public class TeamController {
     private final TeamService teamService;
     private final LeagueService leagueService;
@@ -24,15 +26,16 @@ public class TeamController {
     }
 
     @GetMapping("/teams")
-    public Set<TeamView> getTeams() {
-        return teamService.findAllTeamView();
+    public ResponseEntity<Set<TeamView>> getTeams() {
+        return ResponseEntity.ok(teamService.findAllTeamView());
     }
 
     @PostMapping("/teams")
-    public TeamView createTeam(@RequestBody TeamDto teamDto) {
+    public ResponseEntity<TeamView> createTeam(@RequestBody TeamDto teamDto) {
         leagueService.addTeamToLeague(teamDto.getLeagueId(), teamDto);
         Team savedTeam = teamService.save(new Team(teamDto.getTeamName(), null));
-        return teamService.findByIdTeamView(savedTeam.getTeamId());
+        TeamView teamView = teamService.findByIdTeamView(savedTeam.getTeamId());
+        return ResponseEntity.created(UriBuilder.build(savedTeam.getTeamId())).body(teamView);
     }
 
     @PutMapping("/teams/{teamId}/skaters/{skaterId}")

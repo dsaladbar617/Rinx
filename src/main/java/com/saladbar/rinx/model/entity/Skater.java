@@ -1,7 +1,8 @@
-package com.saladbar.rinx.models.entity;
+package com.saladbar.rinx.model.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -33,6 +34,15 @@ public class Skater {
 
     public Skater(Member member) {
         this.member = member;
+    }
+
+    public Skater(Builder builder) {
+        this.skaterId = builder.skaterId;
+        this.goals = builder.goals;
+        this.assists = builder.assists;
+        this.pim = builder.pim;
+        this.teams = builder.teams;
+        this.member = builder.member;
     }
 
     public Member getMember() {
@@ -88,6 +98,49 @@ public class Skater {
 
     public void setPim(int pim) {
         this.pim = pim;
+    }
+
+    public static class Builder {
+        private long skaterId;
+        private int goals = 0;
+        private int assists = 0;
+        private int pim = 0;
+        private List<Team> teams;
+        private Member member;
+
+        public Builder skaterId(long id) {
+            this.skaterId = id;
+            return this;
+        }
+
+        public Builder goals(int goals) {
+            this.goals = goals;
+            return this;
+        }
+
+        public Builder assists(int assists) {
+            this.assists = assists;
+            return this;
+        }
+
+        public Builder pim(int pim) {
+            this.pim = pim;
+            return this;
+        }
+
+        public Builder teams(List<Team> teams) {
+            this.teams = teams;
+            return this;
+        }
+
+        public Builder member(Member member) {
+            this.member = member;
+            return this;
+        }
+
+        public Skater build() {
+            return new Skater(this);
+        }
     }
 
     @Override

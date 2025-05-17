@@ -1,6 +1,4 @@
-package com.saladbar.rinx.models.dto;
-
-import jakarta.persistence.Column;
+package com.saladbar.rinx.model.dto;
 
 public class CreateMemberDto {
     private String firstName;

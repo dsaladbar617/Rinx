@@ -1,12 +1,13 @@
 package com.saladbar.rinx.team.service;
 
-import com.saladbar.rinx.models.dto.TeamView;
-import com.saladbar.rinx.models.entity.Goalie;
-import com.saladbar.rinx.models.entity.Skater;
+import com.saladbar.rinx.exception.ResourceNotFoundException;
+import com.saladbar.rinx.model.dto.TeamView;
+import com.saladbar.rinx.model.entity.Goalie;
+import com.saladbar.rinx.model.entity.Skater;
 import com.saladbar.rinx.goalie.service.GoalieService;
 import com.saladbar.rinx.skater.service.SkaterService;
 import com.saladbar.rinx.team.repository.TeamRepository;
-import com.saladbar.rinx.models.entity.Team;
+import com.saladbar.rinx.model.entity.Team;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,7 +53,7 @@ public class TeamServiceImpl implements TeamService {
     public TeamView addSkaterToTeam(long teamId, long skaterId) {
         Optional<Team> team = teamRepository.findById(teamId);
         Skater skater = skaterService.findById(skaterId);
-        if (team.isEmpty()) throw new RuntimeException("No Team found");
+        if (team.isEmpty()) throw new ResourceNotFoundException("No Team found");
 
         team.get().getSkaters().add(skater);
         Team savedTeam = teamRepository.save(team.get());
@@ -64,7 +65,7 @@ public class TeamServiceImpl implements TeamService {
     public TeamView addGoalieToTeam(long teamId, long goalieId) {
         Optional<Team> team = teamRepository.findById(teamId);
         Goalie goalie = goalieService.findById(goalieId);
-        if (team.isEmpty()) throw new RuntimeException("No Team found");
+        if (team.isEmpty()) throw new ResourceNotFoundException("No Team found");
 
         team.get().getGoalies().add(goalie);
         Team savedTeam = teamRepository.save(team.get());

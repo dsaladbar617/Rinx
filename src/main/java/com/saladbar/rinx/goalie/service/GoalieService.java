@@ -1,6 +1,6 @@
 package com.saladbar.rinx.goalie.service;
 
-import com.saladbar.rinx.models.entity.Goalie;
+import com.saladbar.rinx.model.entity.Goalie;
 
 import java.util.List;
 

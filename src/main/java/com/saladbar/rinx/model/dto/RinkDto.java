@@ -1,4 +1,4 @@
-package com.saladbar.rinx.models.dto;
+package com.saladbar.rinx.model.dto;
 
 public class RinkDto {
     private int rinkNumber;

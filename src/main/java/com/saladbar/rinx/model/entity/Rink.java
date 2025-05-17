@@ -1,4 +1,4 @@
-package com.saladbar.rinx.models.entity;
+package com.saladbar.rinx.model.entity;
 
 import jakarta.persistence.*;
 
@@ -16,12 +16,22 @@ public class Rink {
     @Column(name = "rink_name")
     private String rinkName;
 
+    @ManyToOne
+    @JoinColumn(name = "location_id", referencedColumnName = "location_id")
+    private Location location;
+
     public Rink() {
     }
 
     public Rink( int rinkNumber, String rinkName) {
         this.rinkNumber = rinkNumber;
         this.rinkName = rinkName;
+    }
+
+    public Rink(Builder builder) {
+        this.rinkId = builder.rinkId;
+        this.rinkNumber = builder.rinkNumber;
+        this.rinkName = builder.rinkName;
     }
 
     public long getRinkId() {
@@ -46,6 +56,39 @@ public class Rink {
 
     public void setRinkName(String name) {
         this.rinkName = name;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public static class Builder {
+        private long rinkId;
+        private int rinkNumber;
+        private String rinkName;
+
+        public Builder rinkId(long id) {
+            this.rinkId = id;
+            return this;
+        }
+
+        public Builder rinkNumber(int num) {
+            this.rinkNumber = num;
+            return this;
+        }
+
+        public Builder rinkName(String name) {
+            this.rinkName = name;
+            return this;
+        }
+
+        public Rink build() {
+            return new Rink(this);
+        }
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.saladbar.rinx.skater.service;
 
-import com.saladbar.rinx.models.entity.Member;
-import com.saladbar.rinx.models.entity.Skater;
+import com.saladbar.rinx.model.entity.Member;
+import com.saladbar.rinx.model.entity.Skater;
 import com.saladbar.rinx.member.service.MemberService;
 import com.saladbar.rinx.skater.repository.SkaterRepository;
 import org.springframework.beans.factory.annotation.Autowired;

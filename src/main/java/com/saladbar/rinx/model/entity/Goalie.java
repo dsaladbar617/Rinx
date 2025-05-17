@@ -1,7 +1,8 @@
-package com.saladbar.rinx.models.entity;
+package com.saladbar.rinx.model.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -50,6 +51,15 @@ public class Goalie {
         this.member = member;
     }
 
+    public Goalie(Builder builder) {
+        this.goalieId = builder.goalieId;
+        this.shotsAgainst = builder.shotsAgainst;
+        this.saves = builder.saves;
+        this.pim = builder.pim;
+        this.teams = builder.teams;
+        this.member = builder.member;
+    }
+
     public Goalie(Member member, int shotsAgainst, int saves, int pim) {
         this.member = member;
         this.shotsAgainst = shotsAgainst;
@@ -88,6 +98,51 @@ public class Goalie {
     public void setPim(int pim) {
         this.pim = pim;
     }
+
+    public static class Builder {
+        private long goalieId;
+        private int shotsAgainst = 0;
+        private int saves = 0;
+        private int pim = 0;
+        private List<Team> teams;
+        private Member member;
+
+        public Builder goalieId(long id) {
+            this.goalieId = id;
+            return this;
+        }
+
+        public Builder shotsAgainst(int shots) {
+            this.shotsAgainst = shots;
+            return this;
+        }
+
+        public Builder saves(int saves) {
+            this.saves = saves;
+            return this;
+        }
+
+        public Builder pim(int pim) {
+            this.pim = pim;
+            return this;
+        }
+
+        public Builder teams(List<Team> teams) {
+            this.teams = teams;
+            return this;
+        }
+
+        public Builder member(Member member) {
+            this.member = member;
+            return this;
+        }
+
+        public Goalie build() {
+            return new Goalie(this);
+        }
+    }
+
+
 
     @Override
     public String toString() {

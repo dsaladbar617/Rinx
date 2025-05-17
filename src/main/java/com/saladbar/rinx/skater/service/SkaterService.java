@@ -1,6 +1,6 @@
 package com.saladbar.rinx.skater.service;
 
-import com.saladbar.rinx.models.entity.Skater;
+import com.saladbar.rinx.model.entity.Skater;
 
 import java.util.List;
 

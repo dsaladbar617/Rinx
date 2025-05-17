@@ -1,4 +1,4 @@
-package com.saladbar.rinx.models.entity;
+package com.saladbar.rinx.model.entity;
 
 import jakarta.persistence.*;
 
@@ -29,7 +29,7 @@ public class Team {
 
     @ManyToMany
     @JoinTable(
-            name = "TeamsGoalies",
+            name = "teams_goalies",
             joinColumns = @JoinColumn(name = "team_id"),
             inverseJoinColumns = @JoinColumn(name = "goalie_id")
     )
@@ -40,6 +40,14 @@ public class Team {
     public Team( String name, League league) {
         this.teamName = name;
         this.league = league;
+    }
+
+    public Team(Builder builder) {
+        this.teamId = builder.teamId;
+        this.teamName = builder.teamName;
+        this.league = builder.league;
+        this.skaters = builder.skaters;
+        this.goalies = builder.goalies;
     }
 
     public List<Goalie> getGoalies() {
@@ -80,6 +88,43 @@ public class Team {
 
     public void setLeague(League league) {
         this.league = league;
+    }
+
+    public static class Builder {
+        private long teamId;
+        private String teamName;
+        private League league;
+        private List<Skater> skaters;
+        private List<Goalie> goalies;
+
+        public Builder teamId(long id) {
+            this.teamId = id;
+            return this;
+        }
+
+        public Builder teamName(String name) {
+            this.teamName = name;
+            return this;
+        }
+
+        public Builder league(League league) {
+            this.league = league;
+            return this;
+        }
+
+        public Builder skaters(List<Skater> skaters) {
+            this.skaters = skaters;
+            return this;
+        }
+
+        public Builder goalies(List<Goalie> goalies) {
+            this.goalies = goalies;
+            return this;
+        }
+
+        public Team build() {
+            return new Team(this);
+        }
     }
 
     @Override

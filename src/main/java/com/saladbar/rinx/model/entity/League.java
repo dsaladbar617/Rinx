@@ -1,4 +1,4 @@
-package com.saladbar.rinx.models.entity;
+package com.saladbar.rinx.model.entity;
 
 import jakarta.persistence.*;
 
@@ -25,6 +25,12 @@ public class League {
         this.leagueName = leagueName;
     }
 
+    public League(Builder builder) {
+        this.leagueId = builder.leagueId;
+        this.leagueName = builder.leagueName;
+        this.teams = builder.teams;
+    }
+
     public long getLeagueId() {
         return leagueId;
     }
@@ -47,6 +53,32 @@ public class League {
 
     public void setTeams(List<Team> teams) {
         this.teams = teams;
+    }
+
+    public static class Builder {
+        private long leagueId;
+        private String leagueName;
+        private List<Team> teams = new ArrayList<>();
+
+        public Builder leagueId(long id) {
+            this.leagueId = id;
+            return this;
+        }
+
+        public Builder leagueName(String name) {
+            this.leagueName = name;
+            return this;
+        }
+
+        public Builder teams(List<Team> teams) {
+            this.teams = teams;
+            return this;
+        }
+
+        public League build() {
+            return new League(this);
+        }
+
     }
 
     @Override

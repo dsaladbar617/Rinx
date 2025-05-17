@@ -1,4 +1,4 @@
-package com.saladbar.rinx.models.entity;
+package com.saladbar.rinx.model.entity;
 
 import jakarta.persistence.*;
 
@@ -35,6 +35,14 @@ public class Member {
         this.email = email;
         this.memberPassword = memberPassword;
         this.dateJoined = new Date(System.currentTimeMillis());
+    }
+
+    public Member(Builder builder) {
+        this.firstName = builder.firstName;
+        this.lastName = builder.lastName;
+        this.email = builder.email;
+        this.memberPassword = builder.memberPassword;
+        this.dateJoined = builder.dateJoined;
     }
 
     public long getMemberId() {
@@ -83,6 +91,49 @@ public class Member {
 
     public void setDateJoined(Date dateJoined) {
         this.dateJoined = dateJoined;
+    }
+
+    public static class Builder {
+        private long memberId;
+        private String firstName;
+        private String lastName;
+        private String email;
+        private String memberPassword;
+        private Date dateJoined;
+
+        public Builder memberId(long id) {
+            this.memberId = id;
+            return this;
+        }
+
+        public Builder firstName(String name) {
+            this.firstName = name;
+            return this;
+        }
+
+        public Builder lastName(String name) {
+            this.lastName = name;
+            return this;
+        }
+
+        public Builder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder memberPassword(String password) {
+            this.memberPassword = password;
+            return this;
+        }
+
+        public Builder dateJoined(Date date) {
+            this.dateJoined = date;
+            return this;
+        }
+
+        public Member build() {
+            return new Member(this);
+        }
     }
 
     @Override
